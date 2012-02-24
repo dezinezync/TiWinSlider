@@ -3,16 +3,46 @@ Titanium.UI.setBackgroundColor('#000');
 
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup({
-	zIndex: 0
+	zIndex: 20,
+	anchorPoint: {x: 0, y: 0.5}
 });
 
 //
-// create controls tab and under window
+// create base UI tab and root window
+//
+var win1 = Titanium.UI.createWindow({  
+    title:'Tab 1',
+    backgroundColor:'#fff',
+    zIndex: 10,
+    anchorPoint: {x: 0, y: 0.5},
+    tabBarHidden: true
+});
+var tab1 = Titanium.UI.createTab({  
+    icon:'KS_nav_views.png',
+    title:'Tab 1',
+    window:win1
+});
+
+var label1 = Titanium.UI.createLabel({
+	color:'#999',
+	text:'I am Window 1',
+	font:{fontSize:20,fontFamily:'Helvetica Neue'},
+	textAlign:'center',
+	width:'auto'
+});
+
+win1.add(label1);
+
+
+//
+// create controls tab and root window
 //
 var win2 = Titanium.UI.createWindow({  
     title:'Tab 2',
     backgroundColor:'#fff',
-    zIndex: 10
+    zIndex: 10,
+    anchorPoint: {x: 0, y: 0.5},
+    tabBarHidden: true
 });
 var tab2 = Titanium.UI.createTab({  
     icon:'KS_nav_ui.png',
@@ -30,97 +60,18 @@ var label2 = Titanium.UI.createLabel({
 
 win2.add(label2);
 
-
-
 //
 //  add tabs
 //
+tabGroup.addTab(tab1);  
 tabGroup.addTab(tab2);  
 
+Ti.include('slider.js');
 
-//create Top Window
-
-var rootWin = Ti.UI.createWindow({
-	width: 320,
-	height: 460,
-	top: 0,
-	left: 0,
-	zIndex: 0,
-	backgroundColor: '999'
-});
-
-var rootWinLabel = Ti.UI.createLabel({
-	width: 320,
-	height: 'auto',
-	left: 0,
-	textAlign: 'center',
-	text: 'Hello World',
-	backgroundColor: 'fff'
-});
-
-rootWin.add(rootWinLabel);
-
-var mainTabGroup = Ti.UI.createTabGroup({
-	zIndex: 1
-});
-
-mainTabGroup.add(rootWin);
-
-var isSliding = false;
-var baseX = null;
-var conX = null;
-var diff = null;
-
-rootWinLabel.addEventListener('dblclick', function(e) {
-	rootWin.close();
-});
-
-rootWin.addEventListener('touchstart', function(e) {
-	baseX = e.globalPoint.x;
-	isSliding = true;
-});
-
-rootWin.addEventListener('touchmove', function(e) {
-	if(isSliding) {
-		
-		if(e.globalPoint.x < 220) {
-		
-			rootWin.left = e.globalPoint.x;
-			
-		}
-	
-	}
-});
-
-rootWin.addEventListener('touchend', function(e) {
-	if(isSliding) {
-		diff = e.globalPoint.x - baseX;
-		
-		if(diff > 0 && rootWin.left < 50) {
-			rootWin.animate({
-				left: 0,
-				duration: 300
-			});
-		}
-		
-		else if(diff <= 220 && diff > 0 && rootWin.left > 50) {
-			rootWin.animate({
-				left: 220,
-				duration: 300
-			});
-		}
-		
-		else if(diff < 0){
-			rootWin.animate({
-				left: 0,
-				duration: 300
-			});
-		}
-	}
-	
-	isSliding = false;
-});
-
-// open tab groups
+// open tab group
 tabGroup.open();
-mainTabGroup.open();
+
+
+
+
+
