@@ -1,11 +1,13 @@
 var win = Ti.UI.currentWindow;
 
 var rootTabGroup = Ti.UI.createTabGroup({
-	zIndex: 0
+	zIndex: 0,
+	width: 220,
+	left: 0
 });
 
 var rootWin = Ti.UI.createWindow({
-	width: 320,
+	width: 220,
 	height: 460,
 	top: 0,
 	left: 0,
@@ -15,7 +17,7 @@ var rootWin = Ti.UI.createWindow({
 });
 
 var tableView = Ti.UI.createTableView({
-	width: 320,
+	width: 220,
 	height: 460,
 	data: [{title: 'Window 1'}, {title: 'Window 2'}]
 });
