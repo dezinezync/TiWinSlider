@@ -4,7 +4,8 @@ Titanium.UI.setBackgroundColor('#000');
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup({
 	zIndex: 20,
-	anchorPoint: {x: 0, y: 0.5}
+	anchorPoint: {x: 0, y: 0.5},
+	width: 320
 });
 
 //
@@ -15,7 +16,8 @@ var win1 = Titanium.UI.createWindow({
     backgroundColor:'#fff',
     zIndex: 10,
     anchorPoint: {x: 0, y: 0.5},
-    tabBarHidden: true
+    tabBarHidden: true,
+    width: 320
 });
 var tab1 = Titanium.UI.createTab({  
     icon:'KS_nav_views.png',
@@ -42,7 +44,8 @@ var win2 = Titanium.UI.createWindow({
     backgroundColor:'#fff',
     zIndex: 10,
     anchorPoint: {x: 0, y: 0.5},
-    tabBarHidden: true
+    tabBarHidden: true,
+    width: 320
 });
 var tab2 = Titanium.UI.createTab({  
     icon:'KS_nav_ui.png',
