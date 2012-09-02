@@ -18,6 +18,11 @@ build/*
 *.xcworkspace
 xcuserdata
 
+.settings
+README
+CHANGELOG.txt
+LICENSE*
+
 # svn & cvs
 .svn
 CVS
