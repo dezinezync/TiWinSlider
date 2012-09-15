@@ -19,6 +19,19 @@ var win2 = ws.drawWindow('Window 2', tabGroup, customRowWindow2);
 
 //Example of setting Titanium provided properties to a window.
 win2.backgroundColor = 'red';
+
+win1.add(Ti.UI.createLabel({
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	text: "some Text"
+}));
+
+win1.add(Ti.UI.createButton({
+	width: 100,
+	height: 44,
+	title: 'Change',
+	bottom: 10
+}));
 	
 navWin.open();
 tabGroup.open();

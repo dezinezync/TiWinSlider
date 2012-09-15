@@ -115,20 +115,22 @@ function switchWindow(e) {
 }
 
 //Private functions. Well, sorta.
-function slideOut() {
+function slideOut(time) {
+	console.log(time);
 	tabGroup.animate({
 		transform: t.translate(slideLimit, 0),
-		duration: 500,
+		duration: ((time != null && time < 500) ? time : 500),
 		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 	});
 	sl = slideLimit;
 	tabGroup.sliding = true;
 }
 
-function slideIn() {
+function slideIn(time) {
+	console.log(time);
 	tabGroup.animate({
 		transform: t,
-		duration: 400,
+		duration: ((time != null && time < 400) ? time : 400),
 		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 	});
 	sl = 0;
@@ -146,18 +148,22 @@ function slideButtonClick() {
 }
 
 /*Moving tabGroup variants. Do not edit*/
-var startPoint = {
+var start = {
 	x: 0,
-	gx: 0
+	gx: 0,
+	t: 0
 };
 
 function tabGroupTouchStart(e) {
-	startPoint.x = e.x;
-	startPoint.gx = e.globalPoint.x;
+	if(e.source != "[object TiUIWindow]") return;	
+	start.x = e.x;
+	start.gx = e.globalPoint.x;
+	start.t = new Date().getTime();
 }
 
 function tabGroupTouchMove(e) {
-	var diff = e.globalPoint.x - startPoint.x;
+	if(e.source != "[object TiUIWindow]") return;
+	var diff = e.globalPoint.x - start.x;
 
 	//If the user is sliding the tabGroup away from the either edge, deny that.
 	if(diff < 0 || diff > slideLimit) return;
@@ -173,23 +179,28 @@ function tabGroupTouchMove(e) {
 }
 
 function tabGroupTouchEnd(e) {
-	if((sl - startPoint.gx) < 0) {
-		slideIn();
+	if(e.source != "[object TiUIWindow]") return;
+
+	te = new Date().getTime();
+
+	if((sl - start.gx) < 0) {
+		slideIn(te-start.t);
 		return;
 	}
 
-	var diff = e.globalPoint.x - startPoint.x;
+	var diff = e.globalPoint.x - start.x;
 
 	//Very small move? Let's take it back to where it began
 	if(diff < catchMove) {
-		slideIn();
+		slideIn(te-start.t);
 	}
 	
 	if(diff >= catchMove) {
-		slideOut();
+		slideOut(te-start.t);
 	}
 	
 	diff = null;
+	te = null;
 }
 
 module.exports = TiWinSlider;
